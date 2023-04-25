@@ -49,6 +49,32 @@ const winningCombi = [
                       [button2, button4, button6]
                      ];
 
+winnerCheck = () => {
+  let winner = "none"
+for (let arrayNumber = 0; arrayNumber < winningCombi.length; arrayNumber++){
+  let buttonvalues = [];
+
+  for (let arrayKey = 0; arrayKey < winningCombi[arrayNumber].length; arrayKey ++){
+
+    buttonvalues.push(winningCombi[arrayNumber][arrayKey].textContent)
+
+      if (buttonvalues.every(val => val === "X")){
+        winner = player1_name;
+          }
+
+      else if (buttonvalues.every(val => val === "0")) {
+        winner = player2_name;
+      }
+
+      else {
+        winner = "none";
+      }
+      
+    }
+  } 
+  return winner;
+}
+
 // Option (New Game/Restart) Buttons
 
 const restart = document.getElementById("restart");
@@ -263,3 +289,5 @@ for (let j = 0; j < buttons.length; j++) {
     }
     });
   }
+
+  
