@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Tic-Tac-Toe</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <button id="play">Play Tic-Tac-Toe</button>
+
+        <div id = "players" class="players">
+
+          <div id ="player1" class="player-content">
+            <h2>Player 1</h2>
+            <input type="text" id="player1-name" placeholder="Name">
+            <div class = "buttons">
+              <button id="next">Next</button>
+              <button id="vs-AI">Play with AI</button>
+            </div>
+          </div>
+
+          <div id="player2" class="player-content">
+            <h2> Player 2</h2>
+            <input type="text" id="player2-name" placeholder="Name">
+            <button id="back">Back</button>
+            <button id="start">Start Game</button>
+          </div>
+
+        </div> 
+  
+        <div id = "game">
+          <div>
+            <button class = "row1 playb" id="button0"></button>
+            <button class = "row1 playb" id="button1"></button>
+            <button class = "row1 playb" id="button2"></button>
+          </div>
+
+          <div>
+            <button class = "row2 playb" id="button3"></button>
+            <button class = "row2 playb" id="button4"></button>
+            <button class = "row2 playb" id="button5"></button>
+          </div>
+
+          <div>
+            <button class = "row3 playb" id="button6"></button>
+            <button class = "row3 playb" id="button7"></button>
+            <button class = "row3 playb" id="button8"></button>
+          </div>
+
+          <div>
+            <button id="restart" class="optionbtns">Restart</button>
+            <button id="newgame" class="optionbtns">New Game</button>
+          </div>
+
+        </div>
+       
+
+        <script src="script.js"></script>
+
+</body>
+
+</html>
+
