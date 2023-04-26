@@ -37,43 +37,6 @@ const button8 = document.getElementById("button8");
 
 // Tic Tac Toe buttons
 const buttons = [button0, button1, button2, button3, button4, button5, button6, button7,button8];
-// Winning combinations
-const winningCombi = [
-                      [button0, button1, button2],
-                      [button3, button4, button5],
-                      [button6, button7, button8],
-                      [button0, button3, button6],
-                      [button1, button4, button7],
-                      [button2, button5, button8],
-                      [button0, button4, button8],
-                      [button2, button4, button6]
-                     ];
-
-winnerCheck = () => {
-  let winner = "none"
-for (let arrayNumber = 0; arrayNumber < winningCombi.length; arrayNumber++){
-  let buttonvalues = [];
-
-  for (let arrayKey = 0; arrayKey < winningCombi[arrayNumber].length; arrayKey ++){
-
-    buttonvalues.push(winningCombi[arrayNumber][arrayKey].textContent)
-
-      if (buttonvalues.every(val => val === "X")){
-        winner = player1_name;
-          }
-
-      else if (buttonvalues.every(val => val === "0")) {
-        winner = player2_name;
-      }
-
-      else {
-        winner = "none";
-      }
-      
-    }
-  } 
-  return winner;
-}
 
 // Option (New Game/Restart) Buttons
 
@@ -86,6 +49,137 @@ const newgame = document.getElementById("newgame");
 let i = 0;
 let playing = 1;
 
+// Button to start the game and proceed to input details for player 1 and 2
+
+play_btn.addEventListener("click", function(event){
+  show(players);
+  show(player1);
+  hide(player2);
+});
+
+// Button to input player 2 details
+
+next_btn.addEventListener("click", function(event){
+ 
+  if (player1_name.value != ""){
+    show(player2);
+    hide(player1);
+  }
+  else {
+    alert("Please input a value.");}
+});
+
+
+//Button to play with an AI instead of another player
+
+vsAI.addEventListener("click", function(event){
+  hide(players);
+  show(game);
+  hide(play_btn);
+});
+
+// Starts the game and show the tic tac toe division
+
+start.addEventListener("click", function(event){
+  if (player2_name.value != ""){
+    hide(players);
+    hide(play_btn);
+    show(game);
+    
+  }
+  else {
+    alert("Please input a value.");}
+});
+
+back.addEventListener("click", function(event){
+  show(players);
+  show(player1);
+  hide(player2);
+});
+
+// Initiates a new game
+
+newgame.addEventListener("click", function(event){
+  player1_name.value = "";
+  player2_name.value = "";
+  show(players);
+  show(player1);
+  hide(player2);
+  hide(game);
+
+})
+
+// Winning combinations
+const winningCombi = [
+                      [button0, button1, button2],
+                      [button3, button4, button5],
+                      [button6, button7, button8],
+                      [button0, button3, button6],
+                      [button1, button4, button7],
+                      [button2, button5, button8],
+                      [button0, button4, button8],
+                      [button2, button4, button6]
+                     ];
+
+// Function to check if player 1 or 2 has won. 
+// This is done by looping through each array winningCombi, then looping through each element.
+// After checking their values, the values is then pushed and stored to buttonValues
+// If the buttonvalues array all contain X or O, it will decide a winner.
+
+winnerCheck = () => {
+  let winner;
+for (let arrayNumber = 0; arrayNumber < winningCombi.length; arrayNumber++){
+  let combination = [
+    winningCombi[arrayNumber][0].textContent,
+    winningCombi[arrayNumber][1].textContent,
+    winningCombi[arrayNumber][2].textContent];
+  for (let arrayKey = 0; arrayKey < winningCombi[arrayNumber].length; arrayKey ++){
+     
+
+      if (combination.every(val => val === "X")){
+        winner = "player1";
+        break;
+          }
+
+      else if (combination.every(val => val === "O")) {
+        winner = "player2";
+        break;
+      }
+    }
+  } 
+  return winner;
+}
+
+for (let j = 0; j < buttons.length; j++) {
+  buttons[j].addEventListener("click", function() {
+    ifClicked(buttons[j]);
+    i = i + 1;
+    let winner = winnerCheck();
+    // Check who wins
+    if (winner === "player1")
+        {
+          alert (player1_name.value + " wins!")
+          ButtonStatus(true);
+          playing = 0;
+
+        }
+    
+    else if (winner === "player2")
+        {
+          alert (player2_name.value + " wins!")
+          ButtonStatus(true);
+          playing = 0;
+        }
+
+      else if (i == 9 && (winner != "player1" || winner !="player2")) {
+      alert("It's a tie!");
+      ButtonStatus(true);
+      playing = 0;
+    }
+    });
+  }
+
+
 // A function that loops through all the buttons. keyFunction is a parameter that accepts a function. The function will then apply to all buttons as it loops through all of them. 
 // buttonNumber is the element iteration of the game buttons. 
 let buttonLoop = (keyFunction) => {
@@ -95,7 +189,8 @@ let buttonLoop = (keyFunction) => {
     
   }
 }
-// Function to disable/enable buttons after the match has been decided.  Uses buttonLoop function to loop through all the buttons. 
+// Function to disable/enable buttons after the match has been decided.  
+// Uses buttonLoop function to loop through all the buttons. 
 let ButtonStatus = (buttonStatus) => {
     buttonLoop((button) =>{
       button.disabled = buttonStatus;
@@ -146,61 +241,12 @@ ifClicked = (button) => {
   }
 }
 
-// Button to start the game and proceed to input details for player 1 and 2
-
-play_btn.addEventListener("click", function(event){
-  show(players);
-  show(player1);
-  hide(player2);
-});
-
-// Button to input player 2 details
-
-next_btn.addEventListener("click", function(event){
- 
-  if (player1_name.value != ""){
-    show(player2);
-    hide(player1);
-  }
-  else {
-    alert("Please input a value.");}
-});
-
-
-//Button to play with an AI instead of another player
-
-vsAI.addEventListener("click", function(event){
-  hide(players);
-  show(game);
-  hide(play_btn);
-});
-
-// Starts the game and show the tic tac toe division
-
-start.addEventListener("click", function(event){
-  if (player2_name.value != ""){
-    hide(players);
-    hide(play_btn);
-    show(game);
-    
-  }
-  else {
-    alert("Please input a value.");}
-});
-
-back.addEventListener("click", function(event){
-  show(players);
-  show(player1);
-  hide(player2);
-});
-
-
 // Restarts the game and clears the buttons. If player 1 restarts the game, player 2 wins and vice versa. 
 
 restart.addEventListener("click", function(event) {
   clearButtonvalues();
 
-  if (button8.textContent === undefined) {
+  if (button0.disabled === false) {
 
     if (i % 2 === 0)
     {
@@ -219,75 +265,6 @@ restart.addEventListener("click", function(event) {
   }
 })
 
-// Initiates a new game
-
-newgame.addEventListener("click", function(event){
-  player1_name.value = "";
-  player2_name.value = "";
-  show(players);
-  show(player1);
-  hide(player2);
-  hide(game);
-
-})
-
 // 
-
-for (let j = 0; j < buttons.length; j++) {
-  buttons[j].addEventListener("click", function() {
-    ifClicked(buttons[j]);
-    i = i + 1;
-
-    // Check who wins
-    if (
-      (button0.textContent === "X" && button1.textContent === "X" && button2.textContent === "X") ||
-      (button3.textContent === "X" && button4.textContent === "X" && button5.textContent === "X") ||
-      (button6.textContent === "X" && button7.textContent === "X" && button8.textContent === "X") ||
-      (button0.textContent === "X" && button3.textContent === "X" && button6.textContent === "X") ||
-      (button1.textContent === "X" && button4.textContent === "X" && button7.textContent === "X") ||
-      (button2.textContent === "X" && button5.textContent === "X" && button8.textContent === "X") ||
-      (button0.textContent === "X" && button4.textContent === "X" && button8.textContent === "X") ||
-      (button2.textContent === "X" && button4.textContent === "X" && button6.textContent === "X")
-      )
-        {
-          alert (player1_name.value + " wins!")
-          ButtonStatus(true);
-          playing = 0;
-
-        }
-    
-    else if (
-        (button0.textContent === "O" && button1.textContent === "O" && button2.textContent === "O") ||
-        (button3.textContent === "O" && button4.textContent === "O" && button5.textContent === "O") ||
-        (button6.textContent === "O" && button7.textContent === "O" && button8.textContent === "O") ||
-        (button0.textContent === "O" && button3.textContent === "O" && button6.textContent === "O") ||
-        (button1.textContent === "O" && button4.textContent === "O" && button7.textContent === "O") ||
-        (button2.textContent === "O" && button5.textContent === "O" && button8.textContent === "O") ||
-        (button0.textContent === "O" && button4.textContent === "O" && button8.textContent === "O") ||
-        (button2.textContent === "O" && button4.textContent === "O" && button6.textContent === "O")
-      )
-        {
-          alert (player2_name.value + " wins!")
-          ButtonStatus(true);
-          playing = 0;
-        }
-
-      else if (
-          button0.textContent != "" &&
-          button1.textContent != "" &&
-          button2.textContent != "" &&
-          button3.textContent != "" &&
-          button4.textContent != "" &&
-          button5.textContent != "" &&
-          button6.textContent != "" &&
-          button7.textContent != "" &&
-          button8.textContent != ""
-        ) {
-      alert("It's a tie!");
-      disableBtns();
-      playing = 0;
-    }
-    });
-  }
 
   
